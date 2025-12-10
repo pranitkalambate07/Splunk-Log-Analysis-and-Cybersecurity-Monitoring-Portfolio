@@ -1,0 +1,24 @@
+# PROJECT 2: HTTP LOG ANALYSIS AND WEB SECURITY MONITORING
+
+# 1. BASELINE: Total Event Count
+index=* OR index=sourcetype=httplog | stats count AS total_events
+
+# 2. BASELINE: Most Frequent URIs Queried
+# Purpose: Identify popular content or key application endpoints.
+index=* OR index=sourcetype="httplog" | top 10 uri
+
+# 3. BASELINE: Analysis of HTTP Methods
+# Purpose: Determine traffic patterns (browsing vs. data submission).
+index=* OR index=sourcetype=httplog | stats count by method | sort - count
+
+# 4. BASELINE: Frequency of HTTP Status Codes
+# Purpose: Gauge the health and accessibility of the web server.
+index=* OR index=sourcetype=httplog | stats count by status | sort - count
+
+# 5. SECURITY: Analysis of Top Failed URIs (4xx Errors)
+# Purpose: Identify specific paths being targeted by scanning or enumeration attempts.
+index=* OR index=sourcetype=httplog status>=400 AND status<500 | top 10 uri by status
+
+# 6. SECURITY: Analyzing Specific Failed Login Attempts (403 Errors)
+# Purpose: Isolate source IPs responsible for specific failed authorization attempts against the login path.
+index=* OR index=* sourcetype=httplog uri=/login status=403 OR status=403 | stats count by src_ip

@@ -1,0 +1,17 @@
+# PROJECT 1: DNS LOG ANALYSIS AND THREAT HUNTING
+
+# 1. BASELINE: Most Frequent FQDNs Queried
+# Purpose: Identify most common external resources accessed.
+index=* OR index=sources/pendnslogs | top limit=20 fqdn
+
+# 2. BASELINE: Most Active Source IP Addresses
+# Purpose: Identify the clients generating the highest request volume.
+index=* OR index=sources | top fqdn, src_ip
+
+# 3. ADVANCED SECURITY: C2 Evasion Detection (Rare Query Types)
+# Purpose: Detect anomalies like DNS Tunneling by finding the least common DNS record types.
+index=* OR index=* sourcetype=dnslog | rare limit=20 query_type
+
+# 4. ADVANCED SECURITY: DGA Malware Detection (Unique Domains)
+# Purpose: Identify 'Chatty Hosts' that query an unusually high number of unique domains, characteristic of DGA.
+index=* OR index=* sourcetype="dnslog" | stats dc(fqdn) as unique_domains_count by src_ip | sort - unique_domains_count | where unique_domains_count > 100

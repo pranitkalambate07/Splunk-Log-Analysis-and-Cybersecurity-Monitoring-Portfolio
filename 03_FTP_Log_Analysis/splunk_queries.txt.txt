@@ -1,0 +1,32 @@
+# PROJECT 3: FTP LOG ANALYSIS AND FILE INTEGRITY MONITORING
+
+# 1. BASELINE: Total Event Count
+source="ftp.log.gz" sourcetype="ftplog" | stats count AS total_events
+
+# 2. BASELINE: Total FTP Activity by Command
+# Purpose: Establish baseline for file management activity (uploads, downloads, deletes).
+source="ftp.log.gz" sourcetype="ftplog" | stats count by command | sort - count
+
+# 3. USER ACTIVITY: Top Upload Activity (STOR Command)
+# Focus: Identify the user responsible for the most file uploads.
+source="ftp.log.gz" sourcetype="ftplog" command="STOR" | stats count AS total_uploads by username | sort - total_uploads
+
+# 4. USER ACTIVITY: Top Download Activity (RETR Command)
+# Focus: Monitor data retrieval volume, potential data theft indicator.
+source="ftp.log.gz" sourcetype="ftplog" command="RETR" | stats count AS total_downloads by username | sort - total_downloads
+
+# 5. SECURITY: File Deletion Monitoring (DELE Command)
+# Focus: Track high-risk file integrity changes.
+source="ftp.log.gz" sourcetype="ftplog" command="DELE" | stats count AS total_deletes by username | sort - total_deletes
+
+# 6. SECURITY: Identifying Failed Command Types (response_code=400)
+# Purpose: Uncover widespread permission issues, configuration errors, or malicious failures.
+source="ftp.log.gz" sourcetype="ftplog" | where response_code=400 | stats count AS failures by command | sort - failures
+
+# 7. SECURITY: Analyzing Users Generating Errors
+# Purpose: Link the high failure rate directly back to the responsible usernames.
+source="ftp.log.gz" sourcetyp="ftplog" response_code=400 | stats count AS error_count by username | sort - error_count
+
+# 8. DEEP DIVE: Investigating Specific Failed Deletions
+# Purpose: Pivot from statistics to raw events for root cause analysis of a security incident.
+source="ftp.log.gz" sourcetype="ftplog" command="DELE" | table _time username src_ip file_path response_code | sort _time
