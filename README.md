@@ -41,7 +41,7 @@ This project focused on analyzing web server access logs to assess server health
 
 ### 📂 Repository Structure:
 * `02_HTTP_Log_Analysis/`
-    * [View Full Project Documentation (PDF)] 01_DNS_Log_Analysis/ADVANCED DNS SECURITY MONITORING WITH SPLUNK SPL.pdf
+    * [View Full Project Documentation (PDF)] 02_HTTP_Log_Analysis/HTTP LOG ANALYSIS AND WEB SECURITY MONITORING PROJECT.pdf
     * `splunk_queries.txt` (All key SPL commands)
 
 ---
@@ -57,7 +57,7 @@ This project focused on monitoring the FTP protocol, specifically for unauthoriz
 
 ### 📂 Repository Structure:
 * `03_FTP_Log_Analysis/`
-    * [View Full Project Documentation (PDF)] 01_DNS_Log_Analysis/ADVANCED DNS SECURITY MONITORING WITH SPLUNK SPL.pdf
+    * [View Full Project Documentation (PDF)] 03_FTP_Log_Analysis/FTP LOG ANALYSIS AND FILE INTEGRITY MONITORING PROJECT.pdf
     * `splunk_queries.txt` (All key SPL commands)
 
 ---
