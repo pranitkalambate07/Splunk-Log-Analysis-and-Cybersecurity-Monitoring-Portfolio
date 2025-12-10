@@ -25,7 +25,7 @@ This project focused on the security analysis of DNS traffic, a critical vector 
 
 ### 📂 Repository Structure:
 * `01_DNS_Log_Analysis/`
-    * [Documentation Link Placeholder]
+    * [View Full Project Documentation (PDF)] 01_DNS_Log_Analysis/ADVANCED DNS SECURITY MONITORING WITH SPLUNK SPL.pdf
     * `splunk_queries.txt` (All key SPL commands)
 
 ---
@@ -41,7 +41,7 @@ This project focused on analyzing web server access logs to assess server health
 
 ### 📂 Repository Structure:
 * `02_HTTP_Log_Analysis/`
-    * [Documentation Link Placeholder]
+    * [View Full Project Documentation (PDF)] 01_DNS_Log_Analysis/ADVANCED DNS SECURITY MONITORING WITH SPLUNK SPL.pdf
     * `splunk_queries.txt` (All key SPL commands)
 
 ---
@@ -57,7 +57,7 @@ This project focused on monitoring the FTP protocol, specifically for unauthoriz
 
 ### 📂 Repository Structure:
 * `03_FTP_Log_Analysis/`
-    * [Documentation Link Placeholder]
+    * [View Full Project Documentation (PDF)] 01_DNS_Log_Analysis/ADVANCED DNS SECURITY MONITORING WITH SPLUNK SPL.pdf
     * `splunk_queries.txt` (All key SPL commands)
 
 ---
