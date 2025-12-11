@@ -61,7 +61,18 @@ This project focused on monitoring the FTP protocol, specifically for unauthoriz
     * `splunk_queries.txt` (All key SPL commands)
 
 ---
+## 📊 Project Results: Dashboards
 
+These images show the key findings and results from my analysis. They turn the raw log data into simple visuals that highlight security risks and issues.
+
+| Finding | Screenshot | Project Context |
+| :--- | :--- | :--- |
+| **Top Potential DGA Hosts** | [![Top Potential DGA Hosts](Dashboard/DNS_dashboard.png)](Dashboard/DNS_dashboard.png) | **DNS Security:** Which client machines are connecting to the most unique domains? This helps find potential malware (DGA) that communicates with many different, suspicious domains. |
+| **Top IPs Generating Web Auth Failures (401/403)** | [![Top IPs Generating Web Auth Failures](Dashboard/HTTP_dashboard.png)](Dashboard/HTTP_dashboard.png) | **Web Security:** The specific computers (Source IPs) that are failing to log in or access restricted web pages. These are the immediate targets we need to block. |
+| **Top Users with Critical FTP Command Failures** | [![Top Users with Critical FTP Command Failures](Dashboard/FTP_dashboard.png)](Dashboard/FTP_dashboard.png) | **FTP/File Integrity:** A simple view of which users are causing the most critical errors when trying to upload or delete files. In this case, one user failed over 2,700 times due to a setup mistake. |
+| **SSH Brute-Force Risk Assessment** | [![SSH Brute-Forcer High vs. Low Risk](Dashboard/SSH_dashboard.png)](Dashboard/SSH_dashboard.png) | **Host Security:** A quick way to sort SSH login attacks into two groups: high priority (High-Risk) and low priority (Low-Risk), so the team knows what to fix first. |
+
+---
 ## ✅ What You Should Add Next
 
 To make this repository absolutely ready for a recruiter review, ensure you add the following files to their respective project folders:
