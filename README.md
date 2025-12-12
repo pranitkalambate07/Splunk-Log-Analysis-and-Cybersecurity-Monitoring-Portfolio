@@ -1,82 +1,261 @@
-# Splunk-Log-Analysis-and-Cybersecurity-Monitoring-Portfolio
-A portfolio showcasing proficiency in Splunk Enterprise Search Processing Language (SPL) for network security analysis, threat hunting, and infrastructure monitoring across DNS, HTTP, and FTP protocols.
+🛡️ Splunk Log Analysis & Cybersecurity Monitoring Portfolio
 
-# 🛡️ Splunk Log Analysis and Cybersecurity Monitoring Portfolio
+A comprehensive portfolio demonstrating advanced skills in Splunk Enterprise, Search Processing Language (SPL), and security log analysis across multiple network protocols. This collection highlights expertise in threat hunting, anomaly detection, event classification, and SIEM workflows using real-world log data.
 
-## 👨‍💻 Project Overview
+👨‍💻 About This Portfolio
 
-This repository contains documentation, key Search Processing Language (SPL) queries, and analysis results for three distinct projects focused on leveraging Splunk Enterprise to transform raw log data into actionable security and operational intelligence. These projects demonstrate advanced skills in log parsing, anomaly detection, and security best practices.
+This repository contains documentation, SPL queries, and analysis results for four end-to-end cybersecurity monitoring projects.
+Each project transforms raw logs into actionable intelligence, showcasing both blue-team and SOC-ready capabilities.
 
-* **Primary Tool:** Splunk Enterprise (Version 10.0.1)
-* **Core Skills:** SPL Mastery, Field Extraction (UI & Regex), Threat Hunting, Anomaly Detection, File Integrity Monitoring.
-* **Prepared By:** PRANIT KALAMBATE
-* **Training:** Trained in CEH Curriculum / Cybersecurity Analyst Training
+Primary Tool: Splunk Enterprise 10.0.1
+Skills Demonstrated: SPL Mastery, Regex Field Extraction, Threat Hunting, Event Classification, SIEM Operations
+Prepared By: Pranit Kalambate
+Training: CEH Curriculum / Cybersecurity Analyst Training
 
----
+📁 Project List
+1️⃣ DNS Log Analysis & Threat Hunting
 
-## 1. Project: DNS Log Analysis and Threat Hunting
+Security assessment focused on DNS traffic—a common vector for C2 communication, DNS tunneling, and DGA malware.
 
-This project focused on the security analysis of DNS traffic, a critical vector for command-and-control (C2) communication.
+🔍 Key Techniques
 
-### Key Analysis Techniques:
-* **Data Enrichment:** Successfully extracted the Fully Qualified Domain Name (`fqdn`) to enable domain-level analysis.
-* **DGA Malware Detection:** Used the `stats dc(fqdn) by src_ip` technique to identify "Chatty Hosts" exhibiting behavior indicative of **Domain Generation Algorithm (DGA)** malware.
-* **C2 Evasion Detection:** Employed the **`rare query_type`** command to find the least common DNS record types (e.g., `TXT`, `AAA`), which often signal covert communication or DNS Tunneling attempts.
+FQDN Extraction: Built custom field extraction to normalize DNS domain analysis.
 
-### 📂 Repository Structure:
-* `01_DNS_Log_Analysis/`
-    * [View Full Project Documentation (PDF)] 01_DNS_Log_Analysis/ADVANCED DNS SECURITY MONITORING WITH SPLUNK SPL.pdf
-    * `splunk_queries.txt` (All key SPL commands)
+DGA Detection: Used
 
----
+stats dc(fqdn) by src_ip
 
-## 2. Project: HTTP Log Analysis and Web Security Monitoring
 
-This project focused on analyzing web server access logs to assess server health and detect web application security threats.
+to identify “Chatty Hosts” contacting abnormally high numbers of domains.
 
-### Key Analysis Techniques:
-* **Baseline Analysis:** Established baseline traffic patterns by analyzing the frequency of HTTP Methods (GET, POST, HEAD) and most popular URIs.
-* **Failed Access Monitoring:** Used targeted filtering (`status=401 OR status=403`) combined with `top uri` to identify high-risk paths being targeted by brute-force or directory enumeration attempts (`/admin`, `/phpmyadmin`).
-* **Actionable Intelligence:** Identified the exact `src_ip` addresses responsible for generating unauthorized access errors, providing immediate data for firewall blocking.
+Covert Channel Detection: Leveraged
 
-### 📂 Repository Structure:
-* `02_HTTP_Log_Analysis/`
-    * [View Full Project Documentation (PDF)] 02_HTTP_Log_Analysis/HTTP LOG ANALYSIS AND WEB SECURITY MONITORING PROJECT.pdf
-    * `splunk_queries.txt` (All key SPL commands)
+rare query_type
 
----
 
-## 3. Project: FTP Log Analysis and File Integrity Monitoring
+to reveal suspicious queries (TXT, AAAA) linked to evasion or tunneling.
 
-This project focused on monitoring the FTP protocol, specifically for unauthorized file transfers, deletions, and failures that compromise file integrity.
+📂 Repository Folder
 
-### Key Analysis Techniques:
-* **Advanced Field Extraction:** Used an **Inline Regular Expression** to precisely parse fields including `username`, `command`, and `response_code`, showcasing strong regex skills.
-* **File Integrity Monitoring:** Tracked high-risk commands (`STOR` for uploads and `DELE` for deletions) to audit all user file management activity.
-* **Incident Diagnosis:** Identified a critical operational failure where the primary user failed *all* upload and delete attempts (`response_code=400`), immediately linking the failures back to the responsible user (`stats count by username`).
+01_DNS_Log_Analysis/
 
-### 📂 Repository Structure:
-* `03_FTP_Log_Analysis/`
-    * [View Full Project Documentation (PDF)] 03_FTP_Log_Analysis/FTP LOG ANALYSIS AND FILE INTEGRITY MONITORING PROJECT.pdf
-    * `splunk_queries.txt` (All key SPL commands)
+-Screenshots
 
----
-## 📊 Project Results: Dashboards
+-ADVANCED DNS SECURITY MONITORING WITH SPLUNK (PDF)
 
-These images show the key findings and results from my analysis. They turn the raw log data into simple visuals that highlight security risks and issues.
+-splunk_queries.txt
 
-| Finding | Screenshot | Project Context |
-| :--- | :--- | :--- |
-| **Top Potential DGA Hosts** | [![Top Potential DGA Hosts](Dashboard/DNS_dashboard.png)](Dashboard/DNS_dashboard.png) | **DNS Security:** Which client machines are connecting to the most unique domains? This helps find potential malware (DGA) that communicates with many different, suspicious domains. |
-| **Top IPs Generating Web Auth Failures (401/403)** | [![Top IPs Generating Web Auth Failures](Dashboard/HTTP_dashboard.png)](Dashboard/HTTP_dashboard.png) | **Web Security:** The specific computers (Source IPs) that are failing to log in or access restricted web pages. These are the immediate targets we need to block. |
-| **Top Users with Critical FTP Command Failures** | [![Top Users with Critical FTP Command Failures](Dashboard/FTP_dashboard.png)](Dashboard/FTP_dashboard.png) | **FTP/File Integrity:** A simple view of which users are causing the most critical errors when trying to upload or delete files. In this case, one user failed over 2,700 times due to a setup mistake. |
-| **SSH Brute-Force Risk Assessment** | [![SSH Brute-Forcer High vs. Low Risk](Dashboard/SSH_dashboard.png)](Dashboard/SSH_dashboard.png) | **Host Security:** A quick way to sort SSH login attacks into two groups: high priority (High-Risk) and low priority (Low-Risk), so the team knows what to fix first. |
+2️⃣ HTTP Log Analysis & Web Security Monitoring
 
----
-## ✅ What You Should Add Next
+Analysis of web server access logs to identify unauthorized access, bruteforce attempts, and high-risk endpoints.
 
-To make this repository absolutely ready for a recruiter review, ensure you add the following files to their respective project folders:
+🔍 Key Techniques
 
-1.  **Documentation:** The finalized Word/PDF document for each project (e.g., `DNS_Analysis_Documentation.pdf`).
-2.  **SPL Query Files:** Create a simple text file (`splunk_queries.txt`) in each folder containing *only* the final, working SPL commands used in that project.
-3.  **Screenshots:** Include the original screenshots in a `screenshots/` folder within each project directory for visual validation of your results.
+Baseline Traffic Analysis: Observed patterns across HTTP methods (GET, POST, HEAD).
+
+Unauthorized Access Detection:
+
+status=401 OR status=403
+
+
+combined with top uri to detect targeted paths like /admin, /phpmyadmin.
+
+Firewall-Ready Intelligence: Isolated offending src_ip addresses for potential blocking.
+
+📂 Repository Folder
+
+02_HTTP_Log_Analysis/
+
+-Screenshots
+
+-HTTP LOG ANALYSIS AND WEB SECURITY MONITORING (PDF)
+
+-splunk_queries.txt
+
+3️⃣ FTP Log Analysis & File Integrity Monitoring
+
+Focused on tracking file uploads, deletions, and authorization errors to detect integrity issues.
+
+🔍 Key Techniques
+
+Regex-Based Field Extraction: Parsed username, command, response_code, etc.
+
+File Integrity Monitoring: Monitored STOR (upload) and DELE (delete) activities.
+
+Incident Identification: Found a critical case where a user consistently triggered response_code=400 failures.
+
+📂 Repository Folder
+
+03_FTP_Log_Analysis/
+
+-Screenshots
+
+-FTP LOG ANALYSIS AND FILE INTEGRITY MONITORING PROJECT (PDF)
+
+-splunk_queries.txt
+
+
+4️⃣ SSH Brute-Force Detection & SIEM Workflow
+
+Simulated a Mini-SIEM by ingesting Linux authentication logs using a Splunk Universal Forwarder.
+
+🔍 Key Techniques
+
+End-to-End Log Ingestion: Forwarded /var/log/auth.log from Kali Linux to Splunk.
+
+Risk-Based Event Categorization:
+Low Risk (Priority 8): Failed attempts targeting invalid users.
+High Risk (Priority 3): Failed attempts against valid system accounts.
+
+SOC-Ready Searches: Rapid isolation of targeted brute-force attacks.
+
+📂 Repository Folder
+
+04_SSH_Brute_Force_Detection/
+
+-Screenshots
+
+-SPLUNK EVENT TYPE PROJECT REPORT (PDF)
+
+-splunk_queries.txt
+
+
+📊 Dashboards & Results
+
+Each project includes Splunk dashboards converting raw logs into clear visual insights:
+
+Finding	Description
+Top Potential DGA Hosts	Highlights clients querying unusually high numbers of domains — often linked to DGA malware.
+Top IPs Generating Web Auth Failures	Identifies systems attempting repeated unauthorized access to web resources (401/403).
+Users with Critical FTP Command Failures	Tracks file integrity issues by monitoring failed STOR/DELE operations.
+SSH Brute-Force Risk Assessment	Categorizes SSH attack attempts into High vs Low priority for SOC triage.🛡️ Splunk Log Analysis & Cybersecurity Monitoring Portfolio
+
+A comprehensive portfolio demonstrating advanced skills in Splunk Enterprise, Search Processing Language (SPL), and security log analysis across multiple network protocols. This collection highlights expertise in threat hunting, anomaly detection, event classification, and SIEM workflows using real-world log data.
+
+👨‍💻 About This Portfolio
+
+This repository contains documentation, SPL queries, and analysis results for four end-to-end cybersecurity monitoring projects.
+Each project transforms raw logs into actionable intelligence, showcasing both blue-team and SOC-ready capabilities.
+
+Primary Tool: Splunk Enterprise 10.0.1
+Skills Demonstrated: SPL Mastery, Regex Field Extraction, Threat Hunting, Event Classification, SIEM Operations
+Prepared By: Pranit Kalambate
+Training: CEH Curriculum / Cybersecurity Analyst Training
+
+📁 Project List
+1️⃣ DNS Log Analysis & Threat Hunting
+
+Security assessment focused on DNS traffic—a common vector for C2 communication, DNS tunneling, and DGA malware.
+
+🔍 Key Techniques
+
+FQDN Extraction: Built custom field extraction to normalize DNS domain analysis.
+
+DGA Detection: Used
+
+stats dc(fqdn) by src_ip
+
+
+to identify “Chatty Hosts” contacting abnormally high numbers of domains.
+
+Covert Channel Detection: Leveraged
+
+rare query_type
+
+
+to reveal suspicious queries (TXT, AAAA) linked to evasion or tunneling.
+
+📂 Repository Folder
+
+01_DNS_Log_Analysis/
+
+-Screenshots
+
+-ADVANCED DNS SECURITY MONITORING WITH SPLUNK (PDF)
+
+-splunk_queries.txt
+
+2️⃣ HTTP Log Analysis & Web Security Monitoring
+
+Analysis of web server access logs to identify unauthorized access, bruteforce attempts, and high-risk endpoints.
+
+🔍 Key Techniques
+
+Baseline Traffic Analysis: Observed patterns across HTTP methods (GET, POST, HEAD).
+
+Unauthorized Access Detection:
+
+status=401 OR status=403
+
+
+combined with top uri to detect targeted paths like /admin, /phpmyadmin.
+
+Firewall-Ready Intelligence: Isolated offending src_ip addresses for potential blocking.
+
+📂 Repository Folder
+
+02_HTTP_Log_Analysis/
+
+-Screenshots
+
+-HTTP LOG ANALYSIS AND WEB SECURITY MONITORING (PDF)
+
+-splunk_queries.txt
+
+3️⃣ FTP Log Analysis & File Integrity Monitoring
+
+Focused on tracking file uploads, deletions, and authorization errors to detect integrity issues.
+
+🔍 Key Techniques
+
+Regex-Based Field Extraction: Parsed username, command, response_code, etc.
+
+File Integrity Monitoring: Monitored STOR (upload) and DELE (delete) activities.
+
+Incident Identification: Found a critical case where a user consistently triggered response_code=400 failures.
+
+📂 Repository Folder
+
+03_FTP_Log_Analysis/
+
+-Screenshots
+
+-FTP LOG ANALYSIS AND FILE INTEGRITY MONITORING PROJECT (PDF)
+
+-splunk_queries.txt
+
+
+4️⃣ SSH Brute-Force Detection & SIEM Workflow
+
+Simulated a Mini-SIEM by ingesting Linux authentication logs using a Splunk Universal Forwarder.
+
+🔍 Key Techniques
+
+End-to-End Log Ingestion: Forwarded /var/log/auth.log from Kali Linux to Splunk.
+
+Risk-Based Event Categorization:
+Low Risk (Priority 8): Failed attempts targeting invalid users.
+High Risk (Priority 3): Failed attempts against valid system accounts.
+
+SOC-Ready Searches: Rapid isolation of targeted brute-force attacks.
+
+📂 Repository Folder
+
+04_SSH_Brute_Force_Detection/
+
+-Screenshots
+
+-SPLUNK EVENT TYPE PROJECT REPORT (PDF)
+
+-splunk_queries.txt
+
+
+📊 Dashboards & Results
+
+Each project includes Splunk dashboards converting raw logs into clear visual insights:
+
+Finding	Description
+Top Potential DGA Hosts	Highlights clients querying unusually high numbers of domains — often linked to DGA malware.
+Top IPs Generating Web Auth Failures	Identifies systems attempting repeated unauthorized access to web resources (401/403).
+Users with Critical FTP Command Failures	Tracks file integrity issues by monitoring failed STOR/DELE operations.
+SSH Brute-Force Risk Assessment	Categorizes SSH attack attempts into High vs Low priority for SOC triage.
