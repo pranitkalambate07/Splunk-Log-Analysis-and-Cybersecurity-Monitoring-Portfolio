@@ -1,0 +1,25 @@
+# Splunk Search Processing Language (SPL) Queries for SSH Brute-Force Detection
+
+# 1. Initial Search: Validate Linux authentication log ingestion
+# This query was used to confirm that logs from the /var/log/auth.log file
+# were successfully forwarded and indexed by Splunk Enterprise.
+index=* "Failed password"
+
+# 2. Event Type 1: High-Risk Targeted Attacks (Priority 3)
+# Rationale: This search filters out "invalid user" attempts to isolate
+# brute-force attempts targeting *valid, existing* Linux accounts.
+# Event Type Name: highrisky
+# Event Type Priority: 3
+index=* "Failed password" NOT "invalid user"
+
+# 3. Event Type 2: Less Risky Automated Scanning (Priority 8)
+# Rationale: This search captures generic automated scanning attempts
+# where bots are guessing random, non-existent usernames.
+# Event Type Name: lessrisky
+# Event Type Priority: 8
+index=* "Failed password" "for invalid user"
+
+# 4. Statistical Analysis and Visualization
+# This query is used to generate the bar chart comparing the volume of
+# the two event types, demonstrating risk categorization effectiveness.
+index=* "Failed password" | stats count by eventtype
